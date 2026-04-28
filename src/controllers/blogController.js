@@ -148,3 +148,42 @@ export const deleteBlog = async (req, res) => {
   }
 }
 
+// export const getBlogs = async (req, res) => {
+//   try {
+//     const { search = "", page = 1, limit = 5 } = req.query;
+
+//     const query = {
+//       title: { $regex: search, $options: "i" }
+//     };
+
+//     const pageNumber = parseInt(page);
+//     const limitNumber = parseInt(limit);
+
+//     const skip = (pageNumber - 1) * limitNumber;
+
+//     const blogs = await Blog.find(query)
+//       .skip(skip)
+//       .limit(limitNumber)
+//       .sort({ createdAt: -1 });
+
+//     const total = await Blog.countDocuments(query);
+
+//     const pages = Math.ceil(total / limitNumber);
+
+//     res.status(200).json({
+//       success: true,
+//       blogs,
+//       total,
+//       page: pageNumber,
+//       pages,
+//     });
+
+//   } catch (error) {
+//     console.log("Error fetching blogs:", error.message);
+//     res.status(500).json({
+//       success: false,
+//       message: "Internal Server Error",
+//     });
+//   }
+// };
+
