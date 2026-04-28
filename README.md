@@ -1,13 +1,14 @@
 Installation
 1. Clone the repository
-git clone <your-repo-url>
-cd backend
 
-3. Install dependencies
-npm install
+   git clone <your-repo-url>
+   cd backend
 
-4. Setup environment variables
-Create a .env file in the root:
+2. Install dependencies
+   npm install
+
+3. Setup environment variables
+   Create a .env file in the root:
 
 PORT=2026
 MONGO_URI=your_mongodb_connection_string
