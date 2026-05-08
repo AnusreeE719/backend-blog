@@ -26,14 +26,16 @@ export const SignUp = async(req, res) => {
         if (newUser) {
 			// Generate JWT token 
 			generateToken(newUser._id, res);
+            // const token = generateToken(newUser._id, res);
 			await newUser.save();
 
 			res.status(201).json({
                 success:true,
 				message: "User registered",
 				id: newUser._id,
-				name: newUser.name,
-				email: newUser.email,
+				// name: newUser.name,
+				// email: newUser.email,
+                // token,
 			});
 		} else {
 			res.status(400).json({success: false, message: "Invalid user data" });
@@ -68,12 +70,13 @@ export const LogIn = async(req, res) => {
             });
         }
         generateToken(user._id, res);
-
+        // const token = generateToken(user._id, res);
         res.status(200).json({
             success: true,
             id: user._id,
-            name: user.name,
-            email: user.email,
+            // name: user.name,
+            // email: user.email,
+            // token,
         });
     } catch(error) {
         console.log("Something went wrong", error.message);

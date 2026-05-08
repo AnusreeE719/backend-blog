@@ -2,7 +2,7 @@ Installation
 1. Clone the repository
 
    git clone <your-repo-url>
-   cd backend
+   cd backend-blog
 
 2. Install dependencies
    npm install
