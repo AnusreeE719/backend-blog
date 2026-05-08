@@ -51,6 +51,19 @@ export const getBlogById = async (req, res) => {
         });
     }
   try {
+    // const blog = await Blog.findById(blogId);
+    // if (!blog) {
+    //     return res.status(404).json({
+    //         success: false,
+    //         message: "Blog not found",
+    //     });
+    // }
+    // if (blog.userId.toString() !== req.user._id.toString()) {
+    //      return res.status(403).json({
+    //         success: false,
+    //         message: "Not authorized",
+    //     });
+    // }
     const blog = await Blog.findOne({ _id: blogId, userId: userId });
 
     if (!blog) {
@@ -63,7 +76,7 @@ export const getBlogById = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Blog retrieved successfully",
-      todo,
+      blog,
     });
   } catch (error) {
         console.log("Something went wrong", error.message);
@@ -84,22 +97,41 @@ export const updateBlog = async (req, res) => {
     }
     
     try {
+        // const blog = await Blog.findById(blogId);
+        // if (!blog) {
+        //     return res.status(404).json({
+        //         success: false,
+        //         message: "Blog not found",
+        //     });
+        // }
+        // if (blog.userId.toString() !== req.user._id.toString()) {
+        //     return res.status(403).json({
+        //         success: false,
+        //         message: "Not authorized",
+        //     });
+        // }
+        // if (title !== undefined) blog.title = title;
+        // if (content !== undefined) blog.content = content;
+
+        // await blog.save();
+
+
         const updates = {};
         if (title !== undefined) updates.title = title;
         if (content !== undefined) updates.content = content;
 
 
         const blog = await Blog.findOneAndUpdate(
-        { _id: blogId, userId: req.user._id },
-        updates,
-        { new: true }
+            { _id: blogId, userId: req.user._id },
+            updates,
+            { returnDocument: "after" }
         );
 
         if (!blog) {
-        return res.status(404).json({
-            success: false,
-            message: "Blog not found or not authorized",
-        });
+            return res.status(404).json({
+                success: false,
+                message: "Blog not found or not authorized",
+            });
         }
 
         res.status(200).json({
@@ -126,6 +158,20 @@ export const deleteBlog = async (req, res) => {
     }
 
   try {
+    // const blog = await Blog.findById(blogId);
+    // if (!blog) {
+    //     return res.status(404).json({
+    //         success: false,
+    //         message: "Blog not found",
+    //     });
+    // }
+    // if (blog.userId.toString() !== req.user._id.toString()) {
+    //      return res.status(403).json({
+    //         success: false,
+    //         message: "Not authorized",
+    //     });
+    // }
+    // await blog.deleteOne();
     const deletedBlog = await Blog.findOneAndDelete({
       _id: blogId,
       userId: req.user._id,
@@ -150,40 +196,46 @@ export const deleteBlog = async (req, res) => {
 
 // export const getBlogs = async (req, res) => {
 //   try {
+//     //Extracts query params
 //     const { search = "", page = 1, limit = 5 } = req.query;
 
-//     const query = {
-//       title: { $regex: search, $options: "i" }
-//     };
-
-//     const pageNumber = parseInt(page);
-//     const limitNumber = parseInt(limit);
-
+//     //Query params come as strings, onvert them to numbers
+//     const pageNumber = parseInt(page) || 1;
+//     const limitNumber = parseInt(limit) || 5;
 //     const skip = (pageNumber - 1) * limitNumber;
 
-//     const blogs = await Blog.find(query)
-//       .skip(skip)
-//       .limit(limitNumber)
-//       .sort({ createdAt: -1 });
+//     //Initializes empty object
+//     const query = {};
 
+//     //Only runs if search exists
+//     if (search) {
+//       query.title = { $regex: search, $options: "i" }; 
+//     }
+
+//     const blogs = await Blog.find(query)
+//       .sort({ createdAt: -1 })
+//       .skip(skip)
+//       .limit(limitNumber);
+
+//       //calculate total docs
 //     const total = await Blog.countDocuments(query);
 
+//     //calculate total pages
 //     const pages = Math.ceil(total / limitNumber);
 
 //     res.status(200).json({
 //       success: true,
-//       blogs,
+//       blogs,       
 //       total,
 //       page: pageNumber,
 //       pages,
 //     });
 
 //   } catch (error) {
-//     console.log("Error fetching blogs:", error.message);
+//     console.log("Something went wrong:", error.message);
 //     res.status(500).json({
 //       success: false,
 //       message: "Internal Server Error",
 //     });
 //   }
 // };
-
